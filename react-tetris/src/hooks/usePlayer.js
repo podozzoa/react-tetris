@@ -14,8 +14,8 @@ export const usePlayer = () =>{
         setPlayer(prev => ({
             ...prev,
             pos: {x: (prev.pos.x += x), y: (prev.pos.y += y)},
-            collided
-        }));
+            collided,
+        }))
     }
 
     const resetPlayer = useCallback(() => {
@@ -24,6 +24,6 @@ export const usePlayer = () =>{
             tetromino: randomTetromino().shape,
             collided: false,
         })
-    }, [])
+    }, []);
     return [player, updatePlayerPos, resetPlayer];
 }

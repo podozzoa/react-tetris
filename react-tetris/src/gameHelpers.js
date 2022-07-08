@@ -5,3 +5,25 @@ export const createStage = () =>
  Array.from(Array(STAGE_HEIGHT), () =>
     new Array(STAGE_WIDTH).fill ([0,'clear'])
     ) // 2차원 배열 선언 
+
+
+export const checkCollision = (player, stage, {x: movX, y: movY}) => {
+   for(let y = 0; y < player.tetromino.length; y += 1) {
+      for(let x = 0; x < player.tetromino[y].length; x += 1) {
+         //1. check that we're on an actual tetromino cell
+         if(player.tetromino[y][x] !== 0) {
+            if(
+            //2. check that our mov is inside the game areas height (y)
+            //we shouldn't go through the bottom of the play area
+            !stage[y + player.pos.y + movY] ||
+            //3.check that our move is inside the game areas width (x)
+            !stage[y + player.pos.y + movY][x + player.pos.x + movX] ||
+            //4. check that the cell we're moving to isn't set to clear
+            stage[y + player.pos.y + movY][x + player.pos.x + movX][1] !== 'clear'
+            ) {
+               return true;
+            }
+         }
+      }
+   }
+}
