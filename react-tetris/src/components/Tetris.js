@@ -42,7 +42,16 @@ const Tetris = () => {
         setScore(0);
         setRows(0); 
     }
-
+    const superDrop = () => {
+        // immediatly drop
+        let posGap = 0;
+        while(!checkCollision(player, stage, {x: 0, y : posGap})) {
+            posGap += 1;
+        }
+        
+        updatePlayerPos({x: 0, y: posGap - 1 , collided: false});
+        updatePlayerPos({x: 0, y: 0, collided: true});
+    }
     const drop = () => {
         // increase level when player has cleared  10 rows
         if(rows > (level + 1) * 10){
@@ -87,6 +96,9 @@ const Tetris = () => {
                 dropPlayer();
             } else if (keyCode === 38) { // up arrow
                 playerRotate(stage, 1);
+            } else if (keyCode === 32) { // super drop
+                //playerRotate(stage, 1);
+                superDrop();
             }
         }
 
@@ -111,7 +123,7 @@ const Tetris = () => {
                             <Display text={`Level : ${level}`} />
                         </div>
                     )}
-                    <StartButton callback={startGame} />
+                    <StartButton onClick={startGame} />
                 </aside>
             </StyledTetris>
         </StyledTetrisWrapper>
